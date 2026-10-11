@@ -1,0 +1,10 @@
+{
+  "first_unlocked_utc": "2026-10-11T09:58:27+00:00",
+  "test_days": [
+    "2026-09-13",
+    "2026-09-14"
+  ],
+  "protocol_sha256": "0224381a70665d880a38c72f35f2b250fa3c97b7281b56e817d71372b22234af",
+  "frozen_choices_sha256": "c540fa09a5111069488bcebca00cae46a03d591ffce33a93abac819a22ab762e",
+  "reruns": []
+}

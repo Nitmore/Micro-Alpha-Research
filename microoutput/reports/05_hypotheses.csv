@@ -1,0 +1,6 @@
+hypothesis,supported,detail
+H1,True,β>0 & t>1.96 every day: True; OFI R² > TI R² on 5/5 days
+H2,True,"slope -0.965 CI [-1.009, -0.914] (includes −1: True); open-snapshot slope -0.485 CI [-0.532, -0.437]"
+H3,True,"RW-significant horizons [0.1, 0.25, 0.5, 1.0, 5.0, 30.0]; peak OOS R² among them at 0.1 s (unrestricted peak 0.1 s)"
+H4,False,mid-change beats clock: False; volume beats clock: False
+H6,True,"γ=0.295 [0.250,0.340]; kernel β=0.180 [0.134,0.226]; size-impact δ=0.253"

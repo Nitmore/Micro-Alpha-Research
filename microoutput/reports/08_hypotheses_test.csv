@@ -1,0 +1,8 @@
+hypothesis,test_supported,test_detail,dev_supported,replicated
+H1,True,"β>0 & t>1.96 both days: True; OFI R² > TI R² on 2/2; OFI R² [0.429, 0.5] vs TI [0.372, 0.263]",True,same verdict
+H2,True,"slope -0.868 CI [-0.946, -0.773] (includes −1: False); open-snapshot -0.32 CI [-0.364, -0.274]",True,same verdict
+H3,True,"RW-significant horizons [0.1, 0.25, 0.5, 1.0, 5.0, 30.0]; peak 0.1 s; OOS R² at 0.1 s 0.0230",True,same verdict
+H4,False,mid-change beats clock: True; volume beats clock: False,False,same verdict
+H5,False,"winning: none; levels kept {0.1: 7, 0.25: 1, 0.5: 1, 1.0: 2, 5.0: 2, 30.0: 1}",False,same verdict
+H6,True,"γ {'2026-09-13': 0.439, '2026-09-14': 0.355}; kernel β {'2026-09-13': 0.2, '2026-09-14': 0.175} (pooled 0.175)",True,same verdict
+H7,True,"significant horizons [0.1, 0.25, 0.5, 1.0]; max gain 0.00279",True,same verdict

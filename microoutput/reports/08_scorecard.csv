@@ -1,0 +1,17 @@
+claim,dev,selection_D6,test
+"Signal OOS R² (1 s, received clock)",LODO mean 0.0494,-0.0069,0.0257 / 0.0593
+"Signal IC (1 s, L = 0)",0.151,0.131,"0.172 [0.160, 0.185]"
+Alpha half-life,750 ms,"> 1000 ms (IC(1 s)/IC(0) = 0.63, CI 0.56–0.69)",750 ms
+"Track A saving vs TWAP, bp (L=130)","0.338 [0.299, 0.382]","0.205 [0.176, 0.237]","0.339 [0.309, 0.370]"
+Track A last-second saving (delay only),"0.049 [-0.064, 0.156]","0.000 [-0.042, 0.041]","0.020 [-0.056, 0.095]"
+Track A SIGNAL VALUE (matched − timed),"0.370 [0.306, 0.433]","0.189 [0.151, 0.229]","0.318 [0.272, 0.357]"
+"Track B break-even maker fee, bp (headline)",—,-1.350,-0.911
+Track B net USDT at headline fee,—,-790.6,-4242.6
+Track C trades,—,0,0
+H1,supported,—,supported (same verdict)
+H2,supported,—,supported (same verdict)
+H3,supported,—,supported (same verdict)
+H4,not supported,—,not supported (same verdict)
+H5,not supported,—,not supported (same verdict)
+H6,supported,—,supported (same verdict)
+H7,supported,—,supported (same verdict)

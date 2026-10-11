@@ -1,0 +1,216 @@
+{
+  "costs": {
+    "fee_grid_bp": {
+      "maker": [
+        -0.5,
+        0.0,
+        1.0,
+        2.0
+      ],
+      "taker": [
+        2.5,
+        4.0,
+        5.0
+      ]
+    },
+    "fee_rule": "every strategy result is reported across the full pre-registered fee grid; the headline row uses the account tier entered in notebook 07 (must be a grid point)",
+    "funding_settlements_utc": [
+      "00:00",
+      "08:00",
+      "16:00"
+    ],
+    "lot_size_eth": 0.001,
+    "tick_size_usdt": 0.01
+  },
+  "data_split": {
+    "calendar_notes": "2026-09-07 is US Labor Day; 2026-09-12/13 are a weekend (selection day + first test day)",
+    "development": [
+      "2026-09-07",
+      "2026-09-08",
+      "2026-09-09",
+      "2026-09-10",
+      "2026-09-11"
+    ],
+    "secondary": "rolling walk-forward over all 8 days reported for transparency only, never used for choices",
+    "selection": [
+      "2026-09-12"
+    ],
+    "selection_rule": "every modeling and strategy choice is frozen after evaluating on the selection day",
+    "test": [
+      "2026-09-13",
+      "2026-09-14"
+    ],
+    "test_rule": "test days are evaluated exactly once, in the robustness notebook, after all choices are frozen",
+    "walk_forward": "expanding by day within development: train D1 -> validate D2, train D1-2 -> validate D3, ..., train D1-4 -> validate D5"
+  },
+  "exclusions": {
+    "always": [
+      "invalid_book windows (valid == 0)",
+      "resync_gap windows",
+      "grid bins with valid == False"
+    ],
+    "received_clock": [
+      "feed latency > 1000 ms",
+      "state age > 1000 ms"
+    ],
+    "robustness_only": [
+      "RPI-candidate trades (ti_x vs ti)",
+      "fast batches (|\u0394mid| >= 4 ticks)",
+      "hours containing a resync"
+    ]
+  },
+  "features": {
+    "derived": [
+      "mid2",
+      "spread",
+      "qi1",
+      "qi5",
+      "wmid_dev",
+      "ti",
+      "ti_x",
+      "ofi_int10",
+      "signed_orders"
+    ],
+    "fitted_on_development_only": [
+      "integrated OFI (PCA across levels)",
+      "Stoikov microprice",
+      "standardisation constants",
+      "depth normaliser D\u0304"
+    ],
+    "flows": [
+      "ofi1",
+      "ofi2",
+      "ofi3",
+      "ofi4",
+      "ofi5",
+      "ofi6",
+      "ofi7",
+      "ofi8",
+      "ofi9",
+      "ofi10",
+      "limit_flow",
+      "market_flow",
+      "move_flow",
+      "v_buy",
+      "v_sell",
+      "v_buy_x",
+      "v_sell_x",
+      "n_trades",
+      "n_rpi",
+      "n_buy_orders",
+      "n_sell_orders",
+      "n_sweep_buy",
+      "n_sweep_sell",
+      "rv_halfticks2",
+      "mid_changes"
+    ],
+    "states": [
+      "bp1",
+      "ap1",
+      "bq1",
+      "aq1",
+      "d5b",
+      "d5a",
+      "d10b",
+      "d10a",
+      "span10b",
+      "span10a",
+      "lat_ms"
+    ],
+    "transforms": {
+      "ewma_half_lives_s": [
+        0.5,
+        1,
+        5,
+        30,
+        120
+      ],
+      "max_lag_s": 300
+    }
+  },
+  "frozen_after": "notebook 04 (features built; no target relationships examined)",
+  "grid": {
+    "bin_ms": 100,
+    "clocks": {
+      "research": "exchange time (transaction_time / trade time)",
+      "trading": "received time + order-send latency"
+    },
+    "latency_grid_ms": [
+      0,
+      50,
+      130,
+      250
+    ],
+    "regression_bucket_s": 1
+  },
+  "hypotheses": {
+    "H1": "Contemporaneous 1 s buckets: \u0394P = \u03b1 + \u03b2\u00b7OFI1 with \u03b2 > 0 (HAC t > 1.96 on every development day); OFI1 R\u00b2 exceeds trade-imbalance R\u00b2 on \u2265 4 of 5 development days.",
+    "H2": "\u03b2 \u221d 1/D: across deciles of bucket-mean touch depth, log \u03b2 vs log D\u0304 slope has a 95% CI that excludes 0; whether it includes \u22121 is reported (open-snapshot version shown as the attenuated control).",
+    "H3": "Lagged OFI predicts \u0394P_h out of sample (walk-forward) above the shuffle null at 5% after Romano\u2013Wolf across the horizon grid; the horizon of peak OOS R\u00b2 is reported.",
+    "H4": "Event-time sampling (mid-change and volume clocks) beats clock time at matched sample counts: Diebold\u2013Mariano p < 0.05.",
+    "H5": "Multi-level or integrated OFI beats level-1 OFI and the microprice out of sample: DM p < 0.05; a level is kept only if its marginal OOS R\u00b2 gain has a 95% block-bootstrap CI above 0.",
+    "H6": "Taker-order signs show long memory (power-law ACF exponent \u03b3 < 1, 95% CI) and impact is transient (fitted propagator kernel decays).",
+    "H7": "Hawkes intensity features add OOS R\u00b2 beyond OFI: DM p < 0.05."
+  },
+  "inference": {
+    "alpha": 0.05,
+    "bootstrap": {
+      "block_minutes": 5,
+      "reps": 1000,
+      "type": "moving block"
+    },
+    "hac": "Newey\u2013West, lags = ceil(h / bucket) + 5",
+    "model_comparison": "Diebold\u2013Mariano on squared errors",
+    "multiple_testing": "Romano\u2013Wolf stepdown over horizon \u00d7 model grid, 1000 reps",
+    "seed": 7,
+    "sharpe": "deflated Sharpe ratio for the number of configurations tried"
+  },
+  "project": "Microstructure Alpha \u2014 Binance USD-M ETHUSDT perpetual, 2026-09-07..14",
+  "purge_embargo": {
+    "embargo_minutes": 10,
+    "max_feature_lookback_minutes": 5,
+    "max_horizon_seconds": 120,
+    "rule": "drop samples within max(prediction horizon, feature lookback) of every train/validation boundary"
+  },
+  "stage0": {
+    "limitations": [
+      "intra-batch prints in fast markets (~27 ms batching)",
+      "RPI liquidity absent from the standard depth stream",
+      "feed latency median ~127 ms (non-colocated capture)",
+      "one instrument, 8 days"
+    ],
+    "rpi_test": {
+      "R1  \u2265 70% better than the visible book (pooled and \u2265 6 days)": true,
+      "R2  \u2265 80% improve by 1\u20133 ticks (pooled and \u2265 6 days)": false,
+      "R3  \u2264 20% with a covering visible queue drop (pooled and \u2265 6 days)": false
+    },
+    "verdict": "NOT PASSED"
+  },
+  "strategy": {
+    "kill_criteria": {
+      "adverse_selection": "5 s markout worse than the spread captured",
+      "latency": "alpha half-life shorter than the send latency",
+      "max_drawdown": "> 3\u00d7 the daily PnL standard deviation on the selection day"
+    },
+    "track_A": "parent orders (e.g. 50 ETH over 10 min) at random start times/sides; TWAP vs OFI-timed children; metric: implementation shortfall vs arrival mid (bp) with block-bootstrap CI",
+    "track_B": "touch quoting skewed by the forecast; queue position from real fill sizes; cancels ahead bounded pessimistic (none) / optimistic (pro-rata); RPI caveat: visible-book makers cannot compete for RPI-matched retail flow, so maker fills are an upper bound",
+    "track_C": "directional taker only where |prediction| > round-trip cost"
+  },
+  "target": {
+    "definition": "\u0394mid_h = mid(t+h) \u2212 mid(t), t = decision time (bin end)",
+    "excluded_horizons": "10 ms (below the ~27 ms batching)",
+    "horizons_s": [
+      0.1,
+      0.25,
+      0.5,
+      1,
+      5,
+      30,
+      120
+    ],
+    "units": [
+      "ticks (half-tick resolution)",
+      "basis points"
+    ]
+  }
+}

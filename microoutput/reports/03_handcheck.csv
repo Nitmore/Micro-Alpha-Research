@@ -1,0 +1,7 @@
+type,found,u,engine_eq_scalar,components_sum,matches_expected
+plain_fill,True,11494470996910,True,True,True
+sweep_empties_level,True,11494475341171,True,True,True
+cancel_at_touch,True,11494470570827,True,True,True
+improvement_into_spread,True,11494602279899,True,True,True
+mixed_fill_and_add,True,11494471326283,True,True,True
+deep_level_only,True,11494470928405,True,True,True

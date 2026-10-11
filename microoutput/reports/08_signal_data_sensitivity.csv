@@ -1,0 +1,7 @@
+sample,filter,n,r2,ic
+D6 frozen,all usable bins,816311,-0.006909015510259575,0.15729098435957398
+D6 frozen,excluding hours with a resync / invalid book,815916,-0.006930543171713488,0.1572489941880406
+D6 frozen,excluding windows with a fast move (≥ 4 ticks in a bin),743642,-143.9109585217712,0.13246081826058417
+dev leave-one-day-out,all usable bins,4221496,0.040107285026384165,0.20060313552118295
+dev leave-one-day-out,excluding hours with a resync / invalid book,4078073,0.040131105113333176,0.20055762420936057
+dev leave-one-day-out,excluding windows with a fast move (≥ 4 ticks in a bin),3081122,-87.12250487897401,0.14970795797364553
